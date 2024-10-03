@@ -1,10 +1,12 @@
 import { Link, NavLink } from 'react-router-dom';
 import {assets} from '../assets/frontend_assets/assets'
+import { useState } from 'react';
 
 const Navbar = () => {
+    const [visible, setVisible] = useState(false)
     return (
         <div className='flex justify-between items-center'>
-           <img src={assets.logo} className='w-26 h-20' alt="logo" /> 
+           <Link to="/"><img src={assets.logo} className='w-26 h-20' alt="logo" /> </Link>
            <ul className=' hidden sm:flex gap-5 text-gray-700 text-sm'>
             <NavLink to={"/"} className="flex flex-col gap-1 items-center">
                 <p>HOME</p>
@@ -43,6 +45,21 @@ const Navbar = () => {
                 <p className='bg-black absolute w-4 right-[-5px] bottom-[-5px] text-white rounded-full 
                 text-[8px] text-center leading-4 aspect-square'>10</p>
             </Link>
+            <img onClick={()=>setVisible(true)} src={assets.menu_icon} className='w-5 cursor-pointer sm:hidden' alt="menu_icon" />
+           </div>
+           {/* side bar menu for small scree */}
+
+           <div className={`absolute right-0 top-0 bottom-0 overflow-hidden bg-white transition-all ${visible? "w-full": "w-0"}`}>
+            <div className='flex flex-col text-gray-600'>
+                <div onClick={()=>setVisible(false)} className='flex items-center gap-4 p-3'>
+                    <img className='h-4 rotate-180' src={assets.dropdown_icon} alt="dropdown_icon" />
+                    <p>Back</p>
+                </div>
+                <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to={"/"}>Home</NavLink>
+                <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to={"/collection"}>COLLECTION</NavLink>
+                <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to={"/about"}>ABOUT</NavLink>
+                <NavLink onClick={()=>setVisible(false)} className="py-2 pl-6 border" to={"/contact"}>CONTACT</NavLink>
+            </div>
 
            </div>
         </div>
