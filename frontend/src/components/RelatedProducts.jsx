@@ -36,8 +36,8 @@ const RelatedProducts = ({category, subCategory}) => {
 
 
 RelatedProducts.propTypes = {
-    category:PropTypes.object.isRequired,
-    subCategory:PropTypes.object.isRequired
+    category:PropTypes.string.isRequired,
+    subCategory:PropTypes.string.isRequired
 }
 
 export default RelatedProducts;
