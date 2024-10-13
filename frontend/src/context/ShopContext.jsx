@@ -19,24 +19,35 @@ const ShopContextProvider = ({ children }) => {
   const navigate = useNavigate()
   
 
-  const addToCart = async (productId, size) => {
+  const addToCart = async (itemId, size) => {
     if (!size) {
       toast.error("Must be select product size");
       return;
     }
     let cartData = structuredClone(cartItems);
-    if (cartData[productId]) {
-      if (cartData[productId][size]) {
-        cartData[productId][size] += 1;
+    if (cartData[itemId]) {
+      if (cartData[itemId][size]) {
+        cartData[itemId][size] += 1;
       } else {
-        cartData[productId][size] = 1;
+        cartData[itemId][size] = 1;
       }
     } else {
-      cartData[productId] = {};
-      cartData[productId][size] = 1;
+      cartData[itemId] = {};
+      cartData[itemId][size] = 1;
     }
     setCartItems(cartData);
     toast.success("Successfully item added to cart");
+    if(token){
+      try {
+
+        await axios.post(backendUrl + "/api/cart/add", {itemId, size}, {headers:{token}})
+        
+      } catch (err) {
+        console.log(err);
+        toast.error(err.message)
+        
+      }
+    }
   };
 
   const getCartCount = () => {
@@ -56,10 +67,21 @@ const ShopContextProvider = ({ children }) => {
     return cartCount;
   };
 
-  const updateQuantity = async (productId, size, quantity)=>{
+  const updateQuantity = async (itemId, size, quantity)=>{
     let cartData = structuredClone(cartItems)
-      cartData[productId][size] = quantity
+      cartData[itemId][size] = quantity
       setCartItems(cartData)
+
+      if(token){
+        try {
+          await axios.post(backendUrl + "/api/cart/update", {itemId, size, quantity}, {headers:{token}})
+          
+        } catch (err) {
+          console.log(err);
+          toast.error(err.message)
+        }
+
+      }
   }
 
   const getCartAmount = ()=>{
@@ -98,17 +120,29 @@ const ShopContextProvider = ({ children }) => {
     }
   }
 
+  const getUserCart = async(token)=>{
+    try {
+      const response =   await axios.post(backendUrl + "/api/cart/get", {}, {headers:{token}})
+      if(response.data.success){
+        setCartItems(response.data.cartData)
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message)
+    }
+  }
   useEffect(()=>{
-    getProductsData()
+    getProductsData()    
   },[])
 
 
   useEffect(()=>{
     if(!token && localStorage.getItem("token")){
       setToken(localStorage.getItem("token"))
+      getUserCart(localStorage.getItem("token"))
     }
 
-  }, [token])
+  }, [])
 
   const value = {
     products,

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Title from "../components/Title";
-import { ShopContext } from "../context/shopContext";
+import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/frontend_assets/assets";
 import CartTotal from "../components/CartTotal";
 
@@ -11,7 +11,8 @@ const Cart = () => {
 
 
     useEffect(()=>{
-        let tempData = []
+        if(products.length > 0){
+            let tempData = []
         for(const items in cartItems){
             for( const item in cartItems[items]){
                 if(cartItems[items][item] > 0){
@@ -24,9 +25,9 @@ const Cart = () => {
             }
         }
        setCartData(tempData);
+        }
         
-
-    },[cartItems])
+    },[cartItems, products])
     
     return (
         <div className=" border-t pt-14">
