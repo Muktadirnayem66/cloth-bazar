@@ -17,7 +17,7 @@ bun dev
 
 
 
-- [Live URL]() 
+- [Live URL](https://cloth-bazar-frontend.vercel.app/) 
 - [GithubRepo]() 
 
 
