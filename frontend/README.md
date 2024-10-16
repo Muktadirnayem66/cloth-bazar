@@ -18,7 +18,7 @@ bun dev
 
 
 - [Live URL](https://cloth-bazar-frontend.vercel.app/) 
-- [GithubRepo]() 
+- [GithubRepo](https://github.com/Muktadirnayem66/cloth-bazar/tree/main/frontend) 
 
 
 clothbazar Project Overview for frontend - 
