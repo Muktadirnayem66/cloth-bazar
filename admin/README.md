@@ -17,8 +17,8 @@ bun dev
 
 
 
-- [Live URL]() 
-- [GithubRepo]() 
+- [Live URL](https://cloth-bazar-admin.vercel.app/) 
+- [GithubRepo](https://github.com/Muktadirnayem66/cloth-bazar/tree/main/admin) 
 
 
 clothbazar Project Overview for admin - 
